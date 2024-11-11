@@ -1,0 +1,12 @@
+{
+	"actorSpecification": 1,
+	"name": "zapier-integrations-scraper",
+	"title": "Zapier Integrations Scraper",
+	"description": "Scrape list of Zapier integrations from Zapier website",
+	"version": "0.0",
+	"meta": {
+		"templateId": "ts-start"
+	},
+	"input": "./input_schema.json",
+	"dockerfile": "./Dockerfile"
+}

@@ -1,0 +1,37 @@
+{
+    "title": "Zapier integrations scraper",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "keyValueStore": {
+            "title": "Key value store",
+            "type": "string",
+            "description": "Key value store to insert results into.",
+            "editor": "textfield"
+        },
+        "pageSize": {
+            "title": "Page size",
+            "type": "integer",
+            "description": "Number of items to get in one request.",
+            "editor": "number",
+            "prefill": 25,
+            "default": 25,
+            "minimum": 1,
+            "maximum": 25
+        },
+        "maxConcurrentRequests": {
+            "title": "Max concurrent requests",
+            "type": "integer",
+            "description": "Number of concurrent requests to make to the server.",
+            "editor": "number",
+            "prefill": 10,
+            "default": 10,
+            "minimum": 1,
+            "maximum": 100
+        }
+    },
+    "required": [
+        "pageSize",
+        "maxConcurrentRequests"
+    ]
+}
