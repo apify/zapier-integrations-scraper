@@ -7,7 +7,8 @@
             "title": "Key value store",
             "type": "string",
             "description": "Key value store to insert results into.",
-            "editor": "textfield"
+            "resourceType": "keyValueStore",
+            "editor": "resourcePicker"
         },
         "pageSize": {
             "title": "Page size",
