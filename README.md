@@ -1,7 +1,7 @@
 ## Zapier Integrations Scraper
 
 This Apify Actor scrapes the list of integrations from the Zapier Integrations page.
-The data are stored in a key-value store as JSON list.
+The data are stored in a key-value store as JSON list under the key `zapier_integrations`.
 
 ## Input schema
 
