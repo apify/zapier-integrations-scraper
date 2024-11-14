@@ -5,10 +5,11 @@ import axiosRetry from 'axios-retry';
 await Actor.init();
 
 const BASE_URL = 'https://zapier.com/explore-api';
-const KV_STORE_KEY = 'zapier';
+const DEFAULT_KV_STORE_KEY = 'zapier';
 
 interface Input {
     keyValueStore: string;
+    key: string;
     pageSize: number;
     maxConcurrentRequests: number;
 }
@@ -41,6 +42,7 @@ if (!input) throw new Error('Input is missing!');
 
 const {
     keyValueStore,
+    key = DEFAULT_KV_STORE_KEY,
     pageSize = 25,
     maxConcurrentRequests = 5,
 } = input;
@@ -175,7 +177,7 @@ const uniqueItems = Array.from(
 );
 
 const store = await Actor.openKeyValueStore(keyValueStore);
-await store.setValue(KV_STORE_KEY, uniqueItems);
+await store.setValue(key, uniqueItems);
 
 console.log(`Stored ${uniqueItems.length} integrations`);
 

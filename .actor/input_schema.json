@@ -10,6 +10,14 @@
             "resourceType": "keyValueStore",
             "editor": "resourcePicker"
         },
+        "key": {
+            "title": "Key value store key",
+            "type": "string",
+            "description": "Key value store key to insert results into.",
+            "editor": "textfield",
+            "prefill": "zapier",
+            "default": "zapier"
+        },
         "pageSize": {
             "title": "Page size",
             "type": "integer",
