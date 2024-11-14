@@ -5,7 +5,7 @@ import axiosRetry from 'axios-retry';
 await Actor.init();
 
 const BASE_URL = 'https://zapier.com/explore-api';
-const KV_STORE_KEY = 'zapier_integrations';
+const KV_STORE_KEY = 'zapier';
 
 interface Input {
     keyValueStore: string;
