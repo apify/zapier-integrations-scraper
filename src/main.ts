@@ -168,7 +168,15 @@ const tasks = Array.from({ length: totalPages }, (_, i) => () => loadPage(i * pa
 const pages = await asyncPool(maxConcurrentRequests, tasks);
 
 const items = pages.flat();
+
+// Remove duplicates based on `url`
+const uniqueItems = Array.from(
+    new Map(items.map((item) => [item.url, item])).values(),
+);
+
 const store = await Actor.openKeyValueStore(keyValueStore);
-await store.setValue(KV_STORE_KEY, items);
+await store.setValue(KV_STORE_KEY, uniqueItems);
+
+console.log(`Stored ${uniqueItems.length} integrations`);
 
 await Actor.exit();
