@@ -12,6 +12,7 @@ interface Input {
     key: string;
     pageSize: number;
     maxConcurrentRequests: number;
+    minItems?: number;
 }
 
 interface ZapierIntegrationItem {
@@ -45,6 +46,7 @@ const {
     key = DEFAULT_KV_STORE_KEY,
     pageSize = 25,
     maxConcurrentRequests = 5,
+    minItems = 1000,
 } = input;
 
 // Configure axios-retry
@@ -123,11 +125,15 @@ const loadPage = async (offset: number): Promise<ZapierIntegrationItem[]> => {
             },
         },
     );
-    return response.data.data.appCategory.apps.results.map((entity) => ({
-        name: entity.name,
-        url: entity.profileUrl,
-        icon: entity.logo.mainUrl,
-    }));
+    return response.data.data.appCategory.apps.results
+        // `-upcoming` apps are Zapier placeholders with no usable integration and no
+        // zapier.com/apps/apify/integrations/<slug> page, so Console links to them lead to 404
+        .filter((entity) => !/-upcoming\/integrations$/.test(entity.profileUrl))
+        .map((entity) => ({
+            name: entity.name,
+            url: entity.profileUrl,
+            icon: entity.logo.mainUrl,
+        }));
 };
 
 // Utility to run promises with limited concurrency
@@ -175,6 +181,13 @@ const items = pages.flat();
 const uniqueItems = Array.from(
     new Map(items.map((item) => [item.url, item])).values(),
 );
+
+// Refuse to overwrite good data with a partial result (e.g. if Zapier changes its API).
+// Failing the run makes the problem visible on the schedule instead of silently storing junk.
+if (uniqueItems.length < minItems) {
+    throw new Error(`Scraped only ${uniqueItems.length} integrations, expected at least ${minItems}. `
+        + 'Zapier probably changed its API; not overwriting the stored data.');
+}
 
 const store = await Actor.openKeyValueStore(keyValueStore);
 await store.setValue(key, uniqueItems);

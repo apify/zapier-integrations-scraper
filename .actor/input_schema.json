@@ -37,6 +37,15 @@
             "default": 10,
             "minimum": 1,
             "maximum": 100
+        },
+        "minItems": {
+            "title": "Minimum number of integrations",
+            "type": "integer",
+            "description": "The run fails without overwriting the stored data if fewer integrations are scraped. Protects against storing partial results when Zapier changes its API.",
+            "editor": "number",
+            "prefill": 1000,
+            "default": 1000,
+            "minimum": 0
         }
     },
     "required": [

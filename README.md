@@ -2,6 +2,7 @@
 
 This Apify Actor scrapes the list of integrations from the Zapier Integrations page.
 The data are stored in a key-value store as JSON list under the defined key.
+Placeholder apps (slug ending in `-upcoming`) are skipped, because they have no usable integration.
 
 ## Input schema
 
@@ -11,6 +12,7 @@ The input schema defines the following properties:
 - **key**: The key under which the results will be stored in the key-value store.
 - **pageSize**: The number of items to get in one request.
 - **maxConcurrentRequests**: The number of concurrent requests to make to the server.
+- **minItems**: If fewer integrations are scraped, the run fails and the stored data is not overwritten (default 1000).
 
 ## Example input
 
